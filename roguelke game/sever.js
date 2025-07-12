@@ -34,7 +34,7 @@ function displayLobby() {
     console.log(chalk.blue('2.') + chalk.white(' 업적 확인하기'));
     console.log(chalk.blue('3.') + chalk.white(' 옵션'));
     console.log(chalk.blue('4.') + chalk.white(' 종료'));
-
+    
     // 하단 경계선
     console.log(line);
 
