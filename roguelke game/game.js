@@ -5,17 +5,17 @@ class Player {
   constructor() {
     this.hp = 100;
     this.atk = 20;
-    this.class = "woorior";
+    this.character = "Woorior";
   }
 
   attack() {
     // 플레이어의 공격
-    const bonus = Math.floor(Math.random() * 10) + 1;
-    const damage = this.atk + bonus;
+    // const bonus = Math.floor(Math.random() * 10) + 1;
+    const damage = this.atk
     
     switch(true){
       case this.damage >= 0 :
-        console.log(`${this.class}의 공격!!/n ${damage}의 데미지가 들어갔습니다.`);
+        console.log(`${this.character}의 공격!!\n ${damage}의 데미지가 들어갔습니다.`);
         return this.damage;
       default :
         console.log(`Miss`)
@@ -53,10 +53,10 @@ function displayStatus(stage, player, monster) {
   console.log(
     chalk.cyanBright(`| Stage: ${stage} `) +
     chalk.blueBright(
-      `| 플레이어 정보`,
+      `| 직업:${player.character} Hp:${player.hp} 공격력:${player.atk}`,
     ) +
     chalk.redBright(
-      `| 몬스터 정보 |`,
+      `| 몬스터:${monster.name} HP:${monster.hp} 공격력:${monster.atk} |`,
     ),
   );
   console.log(chalk.magentaBright(`=====================\n`));
@@ -73,16 +73,32 @@ const battle = async (stage, player, monster) => {
 
     console.log(
       chalk.green(
-        `\n1. 공격한다 2. 아무것도 하지않는다.`,
+        `\n1. 공격한다 2. 도망친다.`,
       ),
     );
     const choice = readlineSync.question('당신의 선택은? ');
 
     // 플레이어의 선택에 따라 다음 행동 처리
-    logs.push(chalk.green(`${choice}를 선택하셨습니다.`));
+    
+    if(choice === "1" ) {  
+      const attack = player.attack();
+      monster.hp -= attack ;
+      
+
+      if(monster.hp > 0){
+        logs.push(chalk.green(`${player.character}가 ${monster.name}에게 ${attack} 데미지를 주었다!`));
+      } else {
+        logs.push(chalk.green(`${player.character}가${monster.name}에게 ${attack} 데미지를 주었다!\n ${monster.name}를 물리쳤다.`));
+        
+      }
+    } 
+    if(choice === "2"){
+       logs.push(chalk.green(`${monster.name}에게서 도망쳤다.`))
+    } 
+    
   }
   
-};
+}
 
 export async function startGame() {
   console.clear();
