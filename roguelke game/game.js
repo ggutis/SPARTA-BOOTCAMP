@@ -14,9 +14,9 @@ class Player {
     const damage = this.atk
     
     switch(true){
-      case this.damage >= 0 :
+      case damage >= 0 :
         console.log(`${this.character}의 공격!!\n ${damage}의 데미지가 들어갔습니다.`);
-        return this.damage;
+        return damage;
       default :
         console.log(`Miss`)
         return 0;
@@ -26,20 +26,21 @@ class Player {
 
 
 class Monster {
-  constructor() {
+  constructor(stage) {
     this.hp = 100;
     this.atk = 10;
     this.name = "Oak";
+    this.stage = stage;
   }
 
   attack() {
     // 몬스터의 공격
-    const damage = this.atk * stage ;
+    const damage = this.atk * this.stage ;
     
     switch(true){
-      case this.damage >= 0 :
-        console.log(`${this.name}의 공격!!/n ${damage}의 데미지가 들어갔습니다.`);
-        return this.damage;
+      case damage > 0 :
+        console.log(`${this.name}의 공격!!\n${damage}의 데미지가 들어갔습니다.`);
+        return damage;
       default :
         console.log(`Miss`)
         return 0;
@@ -82,13 +83,14 @@ const battle = async (stage, player, monster) => {
     
     if(choice === "1" ) {  
       const attack = player.attack();
-      monster.hp -= attack ;
+      monster.hp -= attack;
       
+      if (monster.hp < 0) monster.hp = 0;
 
       if(monster.hp > 0){
         logs.push(chalk.green(`${player.character}가 ${monster.name}에게 ${attack} 데미지를 주었다!`));
       } else {
-        logs.push(chalk.green(`${player.character}가${monster.name}에게 ${attack} 데미지를 주었다!\n ${monster.name}를 물리쳤다.`));
+        logs.push(chalk.green(`${player.character}가${monster.name}에게 ${attack} 데미지를 주었다!\n${monster.name}를 물리쳤다.`));
         
       }
     } 
