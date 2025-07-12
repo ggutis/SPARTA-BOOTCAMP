@@ -82,21 +82,52 @@ const battle = async (stage, player, monster) => {
     // 플레이어의 선택에 따라 다음 행동 처리
     
     if(choice === "1" ) {  
-      const attack = player.attack();
-      monster.hp -= attack;
-      
-      if (monster.hp < 0) monster.hp = 0;
+      const Attack = player.attack();
+      monster.hp -= Attack;
 
-      if(monster.hp > 0){
-        logs.push(chalk.green(`${player.character}가 ${monster.name}에게 ${attack} 데미지를 주었다!`));
-      } else {
-        logs.push(chalk.green(`${player.character}가${monster.name}에게 ${attack} 데미지를 주었다!\n${monster.name}를 물리쳤다.`));
+      const MonAttack = monster.attack();
+      player.hp -= MonAttack;
         
+      
+     
+    // 체력 음수방지
+      if (monster.hp < 0) monster.hp = 0;
+      if (player.hp < 0) player.hp = 0;
+      
+    // 플레이어의 공격 구간 
+      if(monster.hp > 0){
+        logs.push(chalk.green(`${player.character}가 ${monster.name}에게 ${Attack}데미지를 주었다!`));
+      } else if(monster.hp = 0){
+        logs.push(chalk.yellow(`${monster.name}을 물리쳤습니다.`));
+      }
+      
+    // 몬스터의 공격 구간
+      if(player.hp > 0){
+        
+        // const MonAttack = monster.attack();
+        // player.hp -= MonAttack;
+        // if (player.hp < 0) player.hp = 0;
+
+        logs.push(chalk.green(`${monster.name}가 ${player.character}에게 ${MonAttack}데미지를 주었다!`));
+      } else if(player.hp = 0){
+        logs.push(chalk.yellow(`패배했습니다.`));
       }
     } 
-    if(choice === "2"){
+    else if(choice === "2"){
        logs.push(chalk.green(`${monster.name}에게서 도망쳤다.`))
     } 
+
+    // 로그 길이 제한 
+    if (logs.length > 3) logs.shift();
+    
+    // 전투 종료
+    // if(player.hp<0){
+    //   logs.push(chalk.yellow(`패배했습니다.`));
+    //   return false;
+    // } else if (monster.hp<0){
+    //   logs.push(chalk.yellow(`${monster.name}을 물리쳤습니다.`));
+    //   return true;
+    // }
     
   }
   
