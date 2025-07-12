@@ -4,14 +4,14 @@ import readlineSync from 'readline-sync';
 class Player {
   constructor() {
     this.hp = 100;
-    this.atk = 20;
+    this.atk = 6;
     this.character = "Woorior";
   }
 
   attack() {
     // 플레이어의 공격
-    // const bonus = Math.floor(Math.random() * 10) + 1;
-    const damage = this.atk
+    const bonus = Math.floor(Math.random() * 10) + 1;
+    const damage = this.atk + bonus;
     
     switch(true){
       case damage >= 0 :
