@@ -141,7 +141,7 @@ export async function startGame() {
     // 스테이지 클리어 및 게임 종료 조건
 
 
-    if (!result && player.hp<= 0) {
+    if (!result && player.hp <= 0) {
       console.log(chalk.red("게임 오버!"));
       break;
     }
