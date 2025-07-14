@@ -10,7 +10,7 @@ class Player {
 
   attack() {
     // 플레이어의 공격
-    const bonus = Math.floor(Math.random() * 10) + 1;
+    const bonus = Math.floor(Math.random() * 40) + 1;
     const damage = this.atk + bonus;
 
     switch (true) {
@@ -57,7 +57,7 @@ function displayStatus(stage, player, monster) {
       `| 직업:${player.character} Hp:${player.hp} 공격력:${player.atk}`,
     ) +
     chalk.redBright(
-      `| 몬스터:${monster.name} HP:${monster.hp} 공격력:${monster.atk} |`,
+      `| 몬스터:${monster.name} HP:${monster.hp} 공격력:${monster.atk * stage} |`,
     ),
   );
   console.log(chalk.magentaBright(`=====================\n`));
@@ -104,6 +104,7 @@ const battle = async (stage, player, monster) => {
         logs.push(chalk.green(`${monster.name}가 ${player.character}에게 ${MonAttack}데미지를 주었다!`));
       }
     }
+      // 도망치기
     else if (choice === "2") {
       console.log(chalk.green(`${monster.name}에게서 도망쳤다.`))
       readlineSync.question();
@@ -111,7 +112,7 @@ const battle = async (stage, player, monster) => {
     }
 
     // 로그 길이 제한 
-    if (logs.length > 3) logs.shift();
+    if (logs.length > 1) logs.shift();
 
 
     if (player.hp <= 0) {
