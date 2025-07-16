@@ -9,7 +9,7 @@ class Player {
   constructor() {
     this.hp = 100;
     this.atk = 24;
-    this.character = "Woorior";
+    this.character = "전사";
   }
 
   attack() {
@@ -160,7 +160,7 @@ export async function startGame() {
       player.levelUp();
       stage++;
       console.log(chalk.greenBright(`Stage ${stage - 1} 클리어! 다음 스테이지로 이동!`));
-      readlineSync.question('If You Wanna go to Next stage\npress Enter...');
+      readlineSync.question('Press Enter to move to the next stage...');
     }
   }
 
