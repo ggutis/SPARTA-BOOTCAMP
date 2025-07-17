@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
+import { start } from './sever.js';
 
 
 // 스테이지별로 등장할 몬스터 이름 리스트
@@ -120,7 +121,7 @@ const battle = async (stage, player, monster) => {
     } else if (choice === "3") {
       console.log(chalk.green(`${monster.name}에게서 도망쳤다.`));
       readlineSync.question('press Enter...');
-      return false;
+      return start();
     } else {
       logs.push(chalk.yellow('잘못된 입력입니다!'));
     }
