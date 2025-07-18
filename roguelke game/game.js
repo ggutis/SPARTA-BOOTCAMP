@@ -193,7 +193,7 @@ export async function startGame() {
   console.log(jobInfo);
 
   const jobs = ["전사", "마법사", "궁수"];
-  const index = readlineSync.keyInSelect(jobs, `직업을 선택하세요:`);
+  const index = readlineSync.keyInSelect(jobs, "직업을 선택하세요:");
 
   let player;
   if (index === 0) {
