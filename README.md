@@ -80,6 +80,10 @@ node sever.js
 *   **원인 분석**: 이전 스테이지의 전투 결과(`result`)가 다음 스테이지에 영향을 주는 상태 관리의 문제였습니다. `battle` 함수에서 반환된 `true` 값이 `startGame` 함수의 `while` 루프에 그대로 남아, 새로운 몬스터를 생성하고도 전투 로직을 건너뛰었습니다.
 *   **해결 방안**: `startGame` 함수의 `while` 루프 내에서 매번 새로운 `Monster` 객체를 생성하여 전투 상태를 초기화하고, `battle` 함수의 반환 값을 명확하게 처리하여 다음 스테이지 진행 여부를 결정하도록 로직을 강화했습니다.
 
+### 3. 순환 참조로 인한 `ReferenceError` 발생
+*   **문제 현상**: 전투 중 '도망치기'를 선택하면 게임을 재시작하기 위해 `start()` 함수를 호출하는 과정에서 `ReferenceError: Cannot access 'start' before initialization` 오류가 발생했습니다.
+*   **원인 분석**: `sever.js`는 `game.js`의 `startGame` 함수를, `game.js`는 `sever.js`의 `start` 함수를 서로 `import` 하면서 순환 참조(Circular Dependency)가 발생했습니다. 이로 인해 `game.js` 모듈이 `start` 함수를 필요로 하는 시점에 `sever.js` 모듈의 `start` 함수가 아직 초기화되지 않은 상태였습니다.
+*   **해결 방안**: `sever.js`에서 `start` 함수를 `export` 하는 방식과 `game.js`에서 `import` 하는 방식을 Named Export/Import (`export { start }`, `import { start } from ...`)로 통일하여, 모듈 간의 의존성을 명확하게 해결했습니다. 이를 통해 모듈 로딩 시점에서 발생하는 초기화 오류를 방지할 수 있었습니다.
 ---
 
 ## 🤔 개발 회고 (어려웠던 점 및 해결 과정)
